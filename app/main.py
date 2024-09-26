@@ -12,6 +12,11 @@ from fastapi.middleware.cors import CORSMiddleware
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template'))
 from template.task_manager.manager import TaskManager
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template', 'include', 'socket_server'))
+from template.include.socket_server.initializer.init_domain import DomainInitializer
+
+DomainInitializer.initEachDomain()
+
 app = FastAPI()
 
 load_dotenv()
