@@ -12,6 +12,8 @@ from fastapi.middleware.cors import CORSMiddleware
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template'))
 from template.task_manager.manager import TaskManager
 
+from template.deep_learning.controller.deep_learning_controller import deepLearningRouter
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template', 'include', 'socket_server'))
 from template.include.socket_server.initializer.init_domain import DomainInitializer
 
@@ -30,6 +32,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(deepLearningRouter)
 
 if __name__ == "__main__":
     colorama.init(autoreset=True)
