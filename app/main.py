@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from user_defined_initializer.init import UserDefinedInitializer
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template'))
 from template.task_manager.manager import TaskManager
 from template.system_initializer.init import SystemInitializer
@@ -20,6 +22,7 @@ from template.include.socket_server.initializer.init_domain import DomainInitial
 
 DomainInitializer.initEachDomain()
 SystemInitializer.initSystemDomain()
+UserDefinedInitializer.initUserDefinedDomain()
 
 app = FastAPI()
 
