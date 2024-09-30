@@ -293,3 +293,8 @@ pyrightconfig.json
 
 # exclude .env
 .env
+
+# exclude .pem, ssl / tls config info
+*.pem
+*.crt
+*.key
