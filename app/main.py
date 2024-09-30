@@ -11,11 +11,15 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from user_defined_initializer.init import UserDefinedInitializer
 
+from first_user_defined_function_domain.controller.fudf_controller import firstUserDefinedFunctionDomainRouter
+from print_hello.controller.print_hello_controller import printHelloRouter
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template'))
 from template.task_manager.manager import TaskManager
 from template.system_initializer.init import SystemInitializer
 
 from template.deep_learning.controller.deep_learning_controller import deepLearningRouter
+from template.dice.controller.dice_controller import diceResultRouter
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template', 'include', 'socket_server'))
 from template.include.socket_server.initializer.init_domain import DomainInitializer
@@ -39,6 +43,10 @@ app.add_middleware(
 )
 
 app.include_router(deepLearningRouter)
+app.include_router(diceResultRouter)
+
+app.include_router(printHelloRouter)
+app.include_router(firstUserDefinedFunctionDomainRouter)
 
 if __name__ == "__main__":
     colorama.init(autoreset=True)
