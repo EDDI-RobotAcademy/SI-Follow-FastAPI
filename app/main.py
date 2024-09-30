@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template'))
 from template.task_manager.manager import TaskManager
+from template.system_initializer.init import SystemInitializer
 
 from template.deep_learning.controller.deep_learning_controller import deepLearningRouter
 
@@ -18,6 +19,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template', 'inclu
 from template.include.socket_server.initializer.init_domain import DomainInitializer
 
 DomainInitializer.initEachDomain()
+SystemInitializer.initSystemDomain()
 
 app = FastAPI()
 
