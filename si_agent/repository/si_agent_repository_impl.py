@@ -10,12 +10,15 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         temporaryQueueList = []
         userTokenFound = False
 
-        # Get the current event loop
+        # TODO: 좀 더 스마트한 테스트 방식이 필요함
+        # userDefinedReceiverFastAPIChannel.put(json.dumps({"userToken": "token1"}))
+        # userDefinedReceiverFastAPIChannel.put(json.dumps({"userToken": "token2"}))
+        # userDefinedReceiverFastAPIChannel.put(json.dumps({"userToken": "test"}))
+
         loop = asyncio.get_event_loop()
 
         try:
             while True:
-                # Use run_in_executor instead of to_thread
                 receivedResponseFromSocketClient = await loop.run_in_executor(
                     None, userDefinedReceiverFastAPIChannel.get, False
                 )
