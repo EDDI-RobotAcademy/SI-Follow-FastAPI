@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from si_agent.controller.si_agent_controller import siAgentRouter
 from user_defined_initializer.init import UserDefinedInitializer
 
 from first_user_defined_function_domain.controller.fudf_controller import firstUserDefinedFunctionDomainRouter
@@ -47,6 +48,8 @@ app.include_router(diceResultRouter)
 
 app.include_router(printHelloRouter)
 app.include_router(firstUserDefinedFunctionDomainRouter)
+
+app.include_router(siAgentRouter)
 
 if __name__ == "__main__":
     colorama.init(autoreset=True)

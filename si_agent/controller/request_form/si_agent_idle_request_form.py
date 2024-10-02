@@ -7,4 +7,4 @@ class SIAgentIdleRequestForm(BaseModel):
     userToken: str
 
     def toSIAgentIdleRequest(self) -> SIAgentIdleRequest:
-        return SIAgentIdleRequest(content=self.userToken)
+        return SIAgentIdleRequest(userToken=self.userToken)

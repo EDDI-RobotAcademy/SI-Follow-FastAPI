@@ -10,12 +10,12 @@ siAgentRouter = APIRouter()
 async def injectSIAgentService() -> SIAgentServiceImpl:
     return SIAgentServiceImpl(UserDefinedQueueRepositoryImpl.getInstance())
 
-@siAgentRouter.get("/print-hello")
+@siAgentRouter.post("/check-si-agent-idle")
 async def requestToCheckSIAgentIdle(siAgentIdleRequestForm: SIAgentIdleRequestForm,
                                     siAgentService: SIAgentServiceImpl =
                                     Depends(injectSIAgentService)):
 
-    siAgentService.requestToCheckSIAgentIdle(
+    isIdle = await siAgentService.requestToCheckSIAgentIdle(
         siAgentIdleRequestForm.toSIAgentIdleRequest())
 
-    return JSONResponse(content="Hello DLLS~~!!~!", status_code=status.HTTP_200_OK)
+    return JSONResponse(content={"isIdle": isIdle}, status_code=status.HTTP_200_OK)
