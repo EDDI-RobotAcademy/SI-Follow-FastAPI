@@ -5,15 +5,20 @@ import queue
 from si_agent.repository.si_agent_repository import SIAgentRepository
 from template.include.socket_server.utility.color_print import ColorPrinter
 
-
 class SIAgentRepositoryImpl(SIAgentRepository):
     async def checkSIAgentIdle(self, userDefinedReceiverFastAPIChannel, userToken):
         temporaryQueueList = []
         userTokenFound = False
 
+        # Get the current event loop
+        loop = asyncio.get_event_loop()
+
         try:
             while True:
-                receivedResponseFromSocketClient = await asyncio.to_thread(userDefinedReceiverFastAPIChannel.get, False)
+                # Use run_in_executor instead of to_thread
+                receivedResponseFromSocketClient = await loop.run_in_executor(
+                    None, userDefinedReceiverFastAPIChannel.get, False
+                )
                 data = json.loads(receivedResponseFromSocketClient)
 
                 if data.get("userToken") == userToken:
@@ -27,6 +32,6 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             return userTokenFound
 
         for item in temporaryQueueList:
-            await asyncio.to_thread(userDefinedReceiverFastAPIChannel.put, item)
+            await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
 
         return userTokenFound
