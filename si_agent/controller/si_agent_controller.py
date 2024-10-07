@@ -19,3 +19,25 @@ async def requestToCheckSIAgentIdle(siAgentIdleRequestForm: SIAgentIdleRequestFo
         siAgentIdleRequestForm.toSIAgentIdleRequest())
 
     return JSONResponse(content={"isIdle": isIdle}, status_code=status.HTTP_200_OK)
+
+
+@siAgentRouter.post("/check-current-phase")
+async def request_to_get_current_phase(siAgentIdleRequestForm: SIAgentIdleRequestForm,
+                                    siAgentService: SIAgentServiceImpl =
+                                    Depends(injectSIAgentService)):
+
+    current_phase = await siAgentService.request_to_get_current_phase(
+        siAgentIdleRequestForm.toSIAgentIdleRequest())
+
+    return JSONResponse(content={"phase": current_phase}, status_code=status.HTTP_200_OK)
+
+
+@siAgentRouter.post("/get-backlogs")
+async def request_to_get_current_phase(siAgentIdleRequestForm: SIAgentIdleRequestForm,
+                                    siAgentService: SIAgentServiceImpl =
+                                    Depends(injectSIAgentService)):
+
+    backlog = await siAgentService.request_to_get_backlogs(
+        siAgentIdleRequestForm.toSIAgentIdleRequest())
+
+    return JSONResponse(content={"backlog": backlog}, status_code=status.HTTP_200_OK)

@@ -18,4 +18,19 @@ class SIAgentServiceImpl(SIAgentService):
             userDefinedReceiverFastAPIChannel,
             siAgentIdleRequest.toUserToken()
         )
+        
+    async def request_to_get_current_phase(self, siAgentIdleRequest: SIAgentIdleRequest):
+        userDefinedReceiverFastAPIChannel = self.__userDefinedQueueRepository.getUserDefinedSocketReceiverFastAPIChannel()
+        ColorPrinter.print_important_message("request_to_get_current_phase()")
+        return await self.__siAgentRepository.get_current_phase(
+            userDefinedReceiverFastAPIChannel,
+            siAgentIdleRequest.toUserToken()
+        )
 
+    async def request_to_get_backlogs(self, siAgentIdleRequest: SIAgentIdleRequest):
+        userDefinedReceiverFastAPIChannel = self.__userDefinedQueueRepository.getUserDefinedSocketReceiverFastAPIChannel()
+        ColorPrinter.print_important_message("request_to_get_backlogs()")
+        return await self.__siAgentRepository.get_backlogs(
+            userDefinedReceiverFastAPIChannel,
+            siAgentIdleRequest.toUserToken()
+        )
