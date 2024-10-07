@@ -1,5 +1,6 @@
 from si_agent.repository.si_agent_repository_impl import SIAgentRepositoryImpl
 from si_agent.service.request.si_agent_idle_request import SIAgentIdleRequest
+from si_agent.service.request.si_agent_file_list_request import SIAgentFileListRequest
 from si_agent.service.si_agent_service import SIAgentService
 from template.include.socket_server.utility.color_print import ColorPrinter
 from user_defined_queue.repository.user_defined_queue_repository_impl import UserDefinedQueueRepositoryImpl
@@ -33,4 +34,13 @@ class SIAgentServiceImpl(SIAgentService):
         return await self.__siAgentRepository.get_backlogs(
             userDefinedReceiverFastAPIChannel,
             siAgentIdleRequest.toUserToken()
+        )
+        
+    async def request_to_get_file_list(self, si_agent_file_list_request: SIAgentFileListRequest):
+        userDefinedReceiverFastAPIChannel = self.__userDefinedQueueRepository.getUserDefinedSocketReceiverFastAPIChannel()
+        ColorPrinter.print_important_message("request_to_get_file_list()")
+        return await self.__siAgentRepository.get_file_list(
+            userDefinedReceiverFastAPIChannel,
+            si_agent_file_list_request.to_user_token(),
+            si_agent_file_list_request.to_project_name()
         )

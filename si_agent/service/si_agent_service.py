@@ -16,4 +16,8 @@ class SIAgentService(ABC):
     def request_to_get_backlogs(self, siAgentIdleRequest):
         pass
     
+    @abstractmethod
+    def request_to_get_file_list(self, si_agent_file_list_request):
+        pass
+    
 
