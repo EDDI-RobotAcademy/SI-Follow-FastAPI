@@ -12,3 +12,8 @@ class SIAgentService(ABC):
     def request_to_get_current_phase(self, siAgentIdleRequest):
         pass
     
+    @abstractmethod
+    def request_to_get_backlogs(self, siAgentIdleRequest):
+        pass
+    
+
