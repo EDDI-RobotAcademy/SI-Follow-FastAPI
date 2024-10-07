@@ -7,3 +7,7 @@ class SIAgentRepository(ABC):
     async def checkSIAgentIdle(self, userDefinedReceiverFastAPIChannel, userToken):
         pass
 
+    @abstractmethod
+    async def get_current_phase(self, userDefinedReceiverFastAPIChannel, userToken):
+        pass
+    
