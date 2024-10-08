@@ -22,3 +22,7 @@ class SIAgentRepository(ABC):
     @abstractmethod
     async def get_test_reports(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
         pass
+    
+    @abstractmethod
+    async def get_code_reviews(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        pass

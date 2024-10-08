@@ -4,6 +4,7 @@ from si_agent.service.request.si_agent_file_list_request import SIAgentFileListR
 from si_agent.service.request.si_agent_current_phase_request import SIAgentCurrentPhaseRequest
 from si_agent.service.request.si_agent_backlog_request import SIAgentBacklogRequest
 from si_agent.service.request.si_agent_test_reports_request import SIAgentTestReportsRequest
+from si_agent.service.request.si_agent_code_review_request import SIAgentCodeReviewRequest
 from si_agent.service.si_agent_service import SIAgentService
 from template.include.socket_server.utility.color_print import ColorPrinter
 from user_defined_queue.repository.user_defined_queue_repository_impl import UserDefinedQueueRepositoryImpl
@@ -57,4 +58,13 @@ class SIAgentServiceImpl(SIAgentService):
             userDefinedReceiverFastAPIChannel,
             si_agent_test_reports_request.to_user_token(),
             si_agent_test_reports_request.to_project_name()
+        )
+        
+    async def request_to_get_code_review(self, si_agent_code_review_request: SIAgentCodeReviewRequest):
+        userDefinedReceiverFastAPIChannel = self.__userDefinedQueueRepository.getUserDefinedSocketReceiverFastAPIChannel()
+        ColorPrinter.print_important_message("request_to_get_code_review()")
+        return await self.__siAgentRepository.get_code_reviews(
+            userDefinedReceiverFastAPIChannel,
+            si_agent_code_review_request.to_user_token(),
+            si_agent_code_review_request.to_project_name()
         )

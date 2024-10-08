@@ -6,6 +6,7 @@ from si_agent.controller.request_form.si_agent_file_list_request_form import SIA
 from si_agent.controller.request_form.si_agent_current_phase_request_form import SIAgentCurrentPhaseRequestForm
 from si_agent.controller.request_form.si_agent_backlog_request_form import SIAgentBacklogRequestForm
 from si_agent.controller.request_form.si_agent_test_reports_request_form import SIAgentTestReportsRequestForm
+from si_agent.controller.request_form.si_agent_code_review_request_form import SIAgentCodeReviewRequestForm
 from si_agent.service.si_agent_service_impl import SIAgentServiceImpl
 from user_defined_queue.repository.user_defined_queue_repository_impl import UserDefinedQueueRepositoryImpl
 
@@ -67,3 +68,14 @@ async def request_to_get_test_reports(si_agent_test_reports_request_form: SIAgen
         si_agent_test_reports_request_form.to_si_agent_test_reports_request())
 
     return JSONResponse(content={"test_reports": test_reports}, status_code=status.HTTP_200_OK)
+
+
+@siAgentRouter.post("/get-code-review")
+async def request_to_get_code_reviews(si_agent_code_review_request_form: SIAgentCodeReviewRequestForm,
+                                    siAgentService: SIAgentServiceImpl =
+                                    Depends(injectSIAgentService)):
+
+    code_review = await siAgentService.request_to_get_code_review(
+        si_agent_code_review_request_form.to_si_agent_code_review_request())
+
+    return JSONResponse(content={"code_review": code_review}, status_code=status.HTTP_200_OK)

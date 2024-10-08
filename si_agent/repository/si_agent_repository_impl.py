@@ -150,3 +150,30 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
 
         return test_reports
+    
+    async def get_code_reviews(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        temporaryQueueList = []
+
+        loop = asyncio.get_event_loop()
+
+        try:
+            while True:
+                receivedResponseFromSocketClient = await loop.run_in_executor(
+                    None, userDefinedReceiverFastAPIChannel.get, False
+                )
+                data = json.loads(receivedResponseFromSocketClient)
+
+                if data.get("user_token") == user_token and "code_review" in data and data.get("project_name") == project_name:
+                    code_review = data["code_review"]
+                    break
+
+                temporaryQueueList.append(receivedResponseFromSocketClient)
+
+        except queue.Empty:
+            ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
+            return code_review
+
+        for item in temporaryQueueList:
+            await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
+
+        return code_review

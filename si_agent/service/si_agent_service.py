@@ -24,4 +24,8 @@ class SIAgentService(ABC):
     def request_to_get_test_reports(self, si_agent_test_reports_request):
         pass
     
+    @abstractmethod
+    def request_to_get_code_review(self, si_agent_code_review_request):
+        pass
+    
 
