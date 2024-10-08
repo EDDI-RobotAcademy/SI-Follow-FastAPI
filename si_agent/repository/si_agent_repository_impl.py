@@ -1,6 +1,9 @@
+import os
 import asyncio
 import json
 import queue
+
+import aiohttp
 
 from si_agent.repository.si_agent_repository import SIAgentRepository
 from template.include.socket_server.utility.color_print import ColorPrinter
@@ -40,6 +43,19 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return userTokenFound
 
     async def get_current_phase(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 77,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -67,6 +83,20 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return current_phase
     
     async def get_backlogs(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 7733,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
+                
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -94,6 +124,20 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return backlog
     
     async def get_file_list(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 7373,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
+                
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -121,6 +165,20 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return file_list
     
     async def get_test_reports(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 3733,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
+                
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -148,6 +206,20 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return test_reports
     
     async def get_code_reviews(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 7377,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
+                
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
