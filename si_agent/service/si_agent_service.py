@@ -20,4 +20,8 @@ class SIAgentService(ABC):
     def request_to_get_file_list(self, si_agent_file_list_request):
         pass
     
+    @abstractmethod
+    def request_to_get_test_reports(self, si_agent_test_reports_request):
+        pass
+    
 
