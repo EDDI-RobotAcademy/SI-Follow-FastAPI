@@ -12,7 +12,7 @@ class SIAgentRepository(ABC):
         pass
     
     @abstractmethod
-    async def get_backlogs(self, userDefinedReceiverFastAPIChannel, userToken):
+    async def get_backlogs(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
         pass
     
     @abstractmethod

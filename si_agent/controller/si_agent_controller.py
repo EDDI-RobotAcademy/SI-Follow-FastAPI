@@ -4,6 +4,7 @@ from starlette.responses import JSONResponse
 from si_agent.controller.request_form.si_agent_idle_request_form import SIAgentIdleRequestForm
 from si_agent.controller.request_form.si_agent_file_list_request_form import SIAgentFileListRequestForm
 from si_agent.controller.request_form.si_agent_current_phase_request_form import SIAgentCurrentPhaseRequestForm
+from si_agent.controller.request_form.si_agent_backlog_request_form import SIAgentBacklogRequestForm
 from si_agent.service.si_agent_service_impl import SIAgentServiceImpl
 from user_defined_queue.repository.user_defined_queue_repository_impl import UserDefinedQueueRepositoryImpl
 
@@ -35,12 +36,12 @@ async def request_to_get_current_phase(si_agent_current_phase_request_form: SIAg
 
 
 @siAgentRouter.post("/get-backlogs")
-async def request_to_get_current_phase(siAgentIdleRequestForm: SIAgentIdleRequestForm,
+async def request_to_get_current_phase(si_agent_backlog_request_form: SIAgentBacklogRequestForm,
                                     siAgentService: SIAgentServiceImpl =
                                     Depends(injectSIAgentService)):
 
     backlog = await siAgentService.request_to_get_backlogs(
-        siAgentIdleRequestForm.toSIAgentIdleRequest())
+        si_agent_backlog_request_form.to_si_agent_current_phase_request())
 
     return JSONResponse(content={"backlog": backlog}, status_code=status.HTTP_200_OK)
 

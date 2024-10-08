@@ -13,7 +13,7 @@ class SIAgentService(ABC):
         pass
     
     @abstractmethod
-    def request_to_get_backlogs(self, siAgentIdleRequest):
+    def request_to_get_backlogs(self, si_agent_backlog_request):
         pass
     
     @abstractmethod
