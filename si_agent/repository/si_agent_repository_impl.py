@@ -1,6 +1,9 @@
+import os
 import asyncio
 import json
 import queue
+
+import aiohttp
 
 from si_agent.repository.si_agent_repository import SIAgentRepository
 from template.include.socket_server.utility.color_print import ColorPrinter
@@ -40,6 +43,19 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return userTokenFound
 
     async def get_current_phase(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 77,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -59,7 +75,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return current_phase
+            return "phase information doesn't exist."
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -67,6 +83,20 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return current_phase
     
     async def get_backlogs(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 7733,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
+                
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -86,7 +116,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return backlog
+            return "backlog information doesn't exist."
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -94,8 +124,21 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return backlog
     
     async def get_file_list(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 7373,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
+                
         temporaryQueueList = []
-        userTokenFound = False
 
         loop = asyncio.get_event_loop()
 
@@ -107,7 +150,6 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                 data = json.loads(receivedResponseFromSocketClient)
 
                 if data.get("user_token") == user_token and "file_list" in data and data.get("project_name") == project_name:
-                    userTokenFound = True
                     file_list = data["file_list"]
                     break
 
@@ -115,7 +157,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return userTokenFound
+            return "file list information doesn't exist."
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -123,8 +165,21 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return file_list
     
     async def get_test_reports(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 3733,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
+                
         temporaryQueueList = []
-        userTokenFound = False
 
         loop = asyncio.get_event_loop()
 
@@ -136,7 +191,6 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                 data = json.loads(receivedResponseFromSocketClient)
 
                 if data.get("user_token") == user_token and "test_reports" in data and data.get("project_name") == project_name:
-                    userTokenFound = True
                     test_reports = data["test_reports"]
                     break
 
@@ -144,7 +198,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return test_reports
+            return "test reports information doesn't exist."
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -152,6 +206,20 @@ class SIAgentRepositoryImpl(SIAgentRepository):
         return test_reports
     
     async def get_code_reviews(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        
+        # TODO temporary code. must fix for more stability 
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
+                json={
+                    "command": 7377,
+                    "data": [user_token, project_name]
+                }
+            ) as res:
+                print(res.status)
+                await asyncio.sleep(1)
+                
+                
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -171,7 +239,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return code_review
+            return "code review information doesn't exist."
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
