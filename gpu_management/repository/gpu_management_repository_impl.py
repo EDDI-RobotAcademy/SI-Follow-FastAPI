@@ -25,7 +25,7 @@ class GPUManagementRepositoryImpl(GPUManagementRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return status
+            return "gpu status information doesn't exist."
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
