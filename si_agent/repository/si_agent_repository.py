@@ -8,7 +8,7 @@ class SIAgentRepository(ABC):
         pass
     
     @abstractmethod
-    async def get_current_phase(self, userDefinedReceiverFastAPIChannel, userToken):
+    async def get_current_phase(self, userDefinedReceiverFastAPIChannel, userToken, project_name):
         pass
     
     @abstractmethod
@@ -18,4 +18,3 @@ class SIAgentRepository(ABC):
     @abstractmethod
     async def get_file_list(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
         pass
-

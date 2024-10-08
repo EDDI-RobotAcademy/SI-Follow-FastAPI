@@ -9,7 +9,7 @@ class SIAgentService(ABC):
 
 
     @abstractmethod
-    def request_to_get_current_phase(self, siAgentIdleRequest):
+    def request_to_get_current_phase(self, si_agent_current_phase_request):
         pass
     
     @abstractmethod

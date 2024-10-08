@@ -39,9 +39,8 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         return userTokenFound
 
-    async def get_current_phase(self, userDefinedReceiverFastAPIChannel, userToken):
+    async def get_current_phase(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
         temporaryQueueList = []
-        userTokenFound = False
 
         loop = asyncio.get_event_loop()
 
@@ -52,8 +51,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                 )
                 data = json.loads(receivedResponseFromSocketClient)
 
-                if data.get("user_token") == userToken and "phase" in data:
-                    userTokenFound = True
+                if data.get("user_token") == user_token and data.get("project_name") == project_name and "phase" in data:
                     current_phase = data["phase"]
                     break
 
@@ -61,7 +59,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return userTokenFound
+            return current_phase
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)

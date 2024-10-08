@@ -1,6 +1,7 @@
 from si_agent.repository.si_agent_repository_impl import SIAgentRepositoryImpl
 from si_agent.service.request.si_agent_idle_request import SIAgentIdleRequest
 from si_agent.service.request.si_agent_file_list_request import SIAgentFileListRequest
+from si_agent.service.request.si_agent_current_phase_request import SIAgentCurrentPhaseRequest
 from si_agent.service.si_agent_service import SIAgentService
 from template.include.socket_server.utility.color_print import ColorPrinter
 from user_defined_queue.repository.user_defined_queue_repository_impl import UserDefinedQueueRepositoryImpl
@@ -20,12 +21,13 @@ class SIAgentServiceImpl(SIAgentService):
             siAgentIdleRequest.toUserToken()
         )
         
-    async def request_to_get_current_phase(self, siAgentIdleRequest: SIAgentIdleRequest):
+    async def request_to_get_current_phase(self, si_agent_current_phase_request: SIAgentCurrentPhaseRequest):
         userDefinedReceiverFastAPIChannel = self.__userDefinedQueueRepository.getUserDefinedSocketReceiverFastAPIChannel()
         ColorPrinter.print_important_message("request_to_get_current_phase()")
         return await self.__siAgentRepository.get_current_phase(
             userDefinedReceiverFastAPIChannel,
-            siAgentIdleRequest.toUserToken()
+            si_agent_current_phase_request.to_user_token(),
+            si_agent_current_phase_request.to_project_name()
         )
 
     async def request_to_get_backlogs(self, siAgentIdleRequest: SIAgentIdleRequest):

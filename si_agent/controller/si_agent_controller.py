@@ -3,6 +3,7 @@ from starlette.responses import JSONResponse
 
 from si_agent.controller.request_form.si_agent_idle_request_form import SIAgentIdleRequestForm
 from si_agent.controller.request_form.si_agent_file_list_request_form import SIAgentFileListRequestForm
+from si_agent.controller.request_form.si_agent_current_phase_request_form import SIAgentCurrentPhaseRequestForm
 from si_agent.service.si_agent_service_impl import SIAgentServiceImpl
 from user_defined_queue.repository.user_defined_queue_repository_impl import UserDefinedQueueRepositoryImpl
 
@@ -23,12 +24,12 @@ async def requestToCheckSIAgentIdle(siAgentIdleRequestForm: SIAgentIdleRequestFo
 
 
 @siAgentRouter.post("/check-current-phase")
-async def request_to_get_current_phase(siAgentIdleRequestForm: SIAgentIdleRequestForm,
+async def request_to_get_current_phase(si_agent_current_phase_request_form: SIAgentCurrentPhaseRequestForm,
                                     siAgentService: SIAgentServiceImpl =
                                     Depends(injectSIAgentService)):
 
     current_phase = await siAgentService.request_to_get_current_phase(
-        siAgentIdleRequestForm.toSIAgentIdleRequest())
+        si_agent_current_phase_request_form.to_si_agent_current_phase_request())
 
     return JSONResponse(content={"phase": current_phase}, status_code=status.HTTP_200_OK)
 
