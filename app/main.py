@@ -14,6 +14,7 @@ from user_defined_initializer.init import UserDefinedInitializer
 
 from first_user_defined_function_domain.controller.fudf_controller import firstUserDefinedFunctionDomainRouter
 from print_hello.controller.print_hello_controller import printHelloRouter
+from gpu_management.controller.gpu_management_controller import gpu_management_router
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'template'))
 from template.task_manager.manager import TaskManager
@@ -50,6 +51,8 @@ app.include_router(printHelloRouter)
 app.include_router(firstUserDefinedFunctionDomainRouter)
 
 app.include_router(siAgentRouter)
+
+app.include_router(gpu_management_router)
 
 if __name__ == "__main__":
     colorama.init(autoreset=True)
