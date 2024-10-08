@@ -39,9 +39,8 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         return userTokenFound
 
-    async def get_current_phase(self, userDefinedReceiverFastAPIChannel, userToken):
+    async def get_current_phase(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
         temporaryQueueList = []
-        userTokenFound = False
 
         loop = asyncio.get_event_loop()
 
@@ -52,8 +51,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                 )
                 data = json.loads(receivedResponseFromSocketClient)
 
-                if data.get("user_token") == userToken and "phase" in data:
-                    userTokenFound = True
+                if data.get("user_token") == user_token and data.get("project_name") == project_name and "phase" in data:
                     current_phase = data["phase"]
                     break
 
@@ -61,16 +59,15 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return userTokenFound
+            return current_phase
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
 
         return current_phase
     
-    async def get_backlogs(self, userDefinedReceiverFastAPIChannel, userToken):
+    async def get_backlogs(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
         temporaryQueueList = []
-        userTokenFound = False
 
         loop = asyncio.get_event_loop()
 
@@ -81,8 +78,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                 )
                 data = json.loads(receivedResponseFromSocketClient)
 
-                if data.get("user_token") == userToken and "backlog" in data:
-                    userTokenFound = True
+                if data.get("user_token") == user_token and data.get("project_name") == project_name and "backlog" in data:
                     backlog = data["backlog"]
                     break
 
@@ -90,7 +86,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return userTokenFound
+            return backlog
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -125,3 +121,59 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
 
         return file_list
+    
+    async def get_test_reports(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        temporaryQueueList = []
+        userTokenFound = False
+
+        loop = asyncio.get_event_loop()
+
+        try:
+            while True:
+                receivedResponseFromSocketClient = await loop.run_in_executor(
+                    None, userDefinedReceiverFastAPIChannel.get, False
+                )
+                data = json.loads(receivedResponseFromSocketClient)
+
+                if data.get("user_token") == user_token and "test_reports" in data and data.get("project_name") == project_name:
+                    userTokenFound = True
+                    test_reports = data["test_reports"]
+                    break
+
+                temporaryQueueList.append(receivedResponseFromSocketClient)
+
+        except queue.Empty:
+            ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
+            return test_reports
+
+        for item in temporaryQueueList:
+            await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
+
+        return test_reports
+    
+    async def get_code_reviews(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
+        temporaryQueueList = []
+
+        loop = asyncio.get_event_loop()
+
+        try:
+            while True:
+                receivedResponseFromSocketClient = await loop.run_in_executor(
+                    None, userDefinedReceiverFastAPIChannel.get, False
+                )
+                data = json.loads(receivedResponseFromSocketClient)
+
+                if data.get("user_token") == user_token and "code_review" in data and data.get("project_name") == project_name:
+                    code_review = data["code_review"]
+                    break
+
+                temporaryQueueList.append(receivedResponseFromSocketClient)
+
+        except queue.Empty:
+            ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
+            return code_review
+
+        for item in temporaryQueueList:
+            await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
+
+        return code_review
