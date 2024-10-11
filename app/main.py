@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from multiple_user_test_point.controller.multiple_user_test_point_controller import multipleUserTestPointRouter
 from si_agent.controller.si_agent_controller import siAgentRouter
 from user_defined_initializer.init import UserDefinedInitializer
 
@@ -49,6 +50,8 @@ app.include_router(diceResultRouter)
 
 app.include_router(printHelloRouter)
 app.include_router(firstUserDefinedFunctionDomainRouter)
+
+app.include_router(multipleUserTestPointRouter)
 
 app.include_router(siAgentRouter)
 
