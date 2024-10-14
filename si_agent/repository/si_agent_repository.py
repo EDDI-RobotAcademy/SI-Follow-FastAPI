@@ -20,6 +20,10 @@ class SIAgentRepository(ABC):
         pass
     
     @abstractmethod
+    async def get_file_content(self, userDefinedReceiverFastAPIChannel, user_token, project_name, file_name):
+        pass
+    
+    @abstractmethod
     async def get_test_reports(self, userDefinedReceiverFastAPIChannel, user_token, project_name):
         pass
     
