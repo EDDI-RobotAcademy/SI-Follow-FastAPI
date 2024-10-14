@@ -1,6 +1,7 @@
 from si_agent.repository.si_agent_repository_impl import SIAgentRepositoryImpl
 from si_agent.service.request.si_agent_idle_request import SIAgentIdleRequest
 from si_agent.service.request.si_agent_file_list_request import SIAgentFileListRequest
+from si_agent.service.request.si_agent_file_content_request import SIAgentFileContentRequest
 from si_agent.service.request.si_agent_current_phase_request import SIAgentCurrentPhaseRequest
 from si_agent.service.request.si_agent_backlog_request import SIAgentBacklogRequest
 from si_agent.service.request.si_agent_test_reports_request import SIAgentTestReportsRequest
@@ -49,6 +50,16 @@ class SIAgentServiceImpl(SIAgentService):
             userDefinedReceiverFastAPIChannel,
             si_agent_file_list_request.to_user_token(),
             si_agent_file_list_request.to_project_name()
+        )
+        
+    async def request_to_get_file_content(self, si_agent_file_content_request: SIAgentFileContentRequest):
+        userDefinedReceiverFastAPIChannel = self.__userDefinedQueueRepository.getUserDefinedSocketReceiverFastAPIChannel()
+        ColorPrinter.print_important_message("request_to_get_file_content()")
+        return await self.__siAgentRepository.get_file_content(
+            userDefinedReceiverFastAPIChannel,
+            si_agent_file_content_request.to_user_token(),
+            si_agent_file_content_request.to_project_name(),
+            si_agent_file_content_request.to_file_name()
         )
         
     async def request_to_get_test_reports(self, si_agent_test_reports_request: SIAgentTestReportsRequest):
