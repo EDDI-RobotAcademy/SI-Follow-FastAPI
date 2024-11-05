@@ -53,9 +53,8 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                     "data": [user_token, project_name]
                 }
             ) as res:
-                print(res.status)
                 await asyncio.sleep(1)
-                
+        ColorPrinter.print_important_message("hihihihihihihi")
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -65,17 +64,21 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                 receivedResponseFromSocketClient = await loop.run_in_executor(
                     None, userDefinedReceiverFastAPIChannel.get, False
                 )
+                ColorPrinter.print_important_message("upupupupupupupup")
                 data = json.loads(receivedResponseFromSocketClient)
-
+                
+                ColorPrinter.print_important_message(f"outside: {data}")
                 if data.get("user_token") == user_token and data.get("project_name") == project_name and "phase" in data:
+                    ColorPrinter.print_important_message("inside")
                     current_phase = data["phase"]
+                    ColorPrinter.print_important_message(f"phase: {current_phase}")
                     break
 
                 temporaryQueueList.append(receivedResponseFromSocketClient)
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "phase information doesn't exist."
+            return ["phase information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -93,7 +96,6 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                     "data": [user_token, project_name]
                 }
             ) as res:
-                print(res.status)
                 await asyncio.sleep(1)
                 
                 
@@ -116,7 +118,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "backlog information doesn't exist."
+            return ["backlog information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -134,7 +136,6 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                     "data": [user_token, project_name]
                 }
             ) as res:
-                print(res.status)
                 await asyncio.sleep(1)
                 
                 
@@ -157,7 +158,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "file list information doesn't exist."
+            return ["file list information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -186,10 +187,6 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                     None, userDefinedReceiverFastAPIChannel.get, False
                 )
                 data = json.loads(receivedResponseFromSocketClient)
-                print('#'*40)
-                print('data: ')
-                print(data)
-                print('#'*40)
 
                 if data.get("user_token") == user_token and "file_content" in data and data.get("project_name") == project_name and data.get("file_name") == file_name:
                     file_content = data["file_content"]
@@ -199,7 +196,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "file content doesn't exist."
+            return ["file content doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -217,7 +214,6 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                     "data": [user_token, project_name]
                 }
             ) as res:
-                print(res.status)
                 await asyncio.sleep(1)
                 
                 
@@ -240,7 +236,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "test reports information doesn't exist."
+            return ["test reports information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -258,7 +254,6 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                     "data": [user_token, project_name]
                 }
             ) as res:
-                print(res.status)
                 await asyncio.sleep(1)
                 
                 
@@ -281,7 +276,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "code review information doesn't exist."
+            return ["code review information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)

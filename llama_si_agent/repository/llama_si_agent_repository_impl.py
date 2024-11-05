@@ -74,7 +74,7 @@ class LlamaSIAgentRepositoryImpl(LlamaSIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "phase information doesn't exist."
+            return ["phase information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -114,7 +114,7 @@ class LlamaSIAgentRepositoryImpl(LlamaSIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "backlog information doesn't exist."
+            return ["backlog information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -154,7 +154,7 @@ class LlamaSIAgentRepositoryImpl(LlamaSIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "file list information doesn't exist."
+            return ["file list information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -192,7 +192,7 @@ class LlamaSIAgentRepositoryImpl(LlamaSIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "file content doesn't exist."
+            return ["file content doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -232,7 +232,7 @@ class LlamaSIAgentRepositoryImpl(LlamaSIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "test reports information doesn't exist."
+            return ["test reports information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
@@ -272,7 +272,7 @@ class LlamaSIAgentRepositoryImpl(LlamaSIAgentRepository):
 
         except queue.Empty:
             ColorPrinter.print_important_message("아직 데이터를 처리 중이거나 요청한 데이터가 없습니다")
-            return "code review information doesn't exist."
+            return ["code review information doesn't exist."]
 
         for item in temporaryQueueList:
             await loop.run_in_executor(None, userDefinedReceiverFastAPIChannel.put, item)
