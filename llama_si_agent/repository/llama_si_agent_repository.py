@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 
-class SIAgentRepository(ABC):
+class LlamaSIAgentRepository(ABC):
     @abstractmethod
     async def checkSIAgentIdle(self, userDefinedReceiverFastAPIChannel, userToken):
         pass
