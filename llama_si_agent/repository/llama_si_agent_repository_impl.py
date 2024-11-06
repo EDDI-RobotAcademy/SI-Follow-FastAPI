@@ -5,10 +5,10 @@ import queue
 
 import aiohttp
 
-from si_agent.repository.si_agent_repository import SIAgentRepository
+from llama_si_agent.repository.llama_si_agent_repository import LlamaSIAgentRepository
 from template.include.socket_server.utility.color_print import ColorPrinter
 
-class SIAgentRepositoryImpl(SIAgentRepository):
+class LlamaSIAgentRepositoryImpl(LlamaSIAgentRepository):
     async def checkSIAgentIdle(self, userDefinedReceiverFastAPIChannel, userToken):
         temporaryQueueList = []
         userTokenFound = False
@@ -49,12 +49,11 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             async with session.post(
                 url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
                 json={
-                    "command": 77,
+                    "command": 78,
                     "data": [user_token, project_name]
                 }
             ) as res:
                 await asyncio.sleep(1)
-        ColorPrinter.print_important_message("hihihihihihihi")
         temporaryQueueList = []
 
         loop = asyncio.get_event_loop()
@@ -64,12 +63,9 @@ class SIAgentRepositoryImpl(SIAgentRepository):
                 receivedResponseFromSocketClient = await loop.run_in_executor(
                     None, userDefinedReceiverFastAPIChannel.get, False
                 )
-                ColorPrinter.print_important_message("upupupupupupupup")
                 data = json.loads(receivedResponseFromSocketClient)
                 
-                ColorPrinter.print_important_message(f"outside: {data}")
                 if data.get("user_token") == user_token and data.get("project_name") == project_name and "phase" in data:
-                    ColorPrinter.print_important_message("inside")
                     current_phase = data["phase"]
                     ColorPrinter.print_important_message(f"phase: {current_phase}")
                     break
@@ -92,7 +88,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             async with session.post(
                 url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
                 json={
-                    "command": 7733,
+                    "command": 7734,
                     "data": [user_token, project_name]
                 }
             ) as res:
@@ -132,7 +128,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             async with session.post(
                 url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
                 json={
-                    "command": 7373,
+                    "command": 7374,
                     "data": [user_token, project_name]
                 }
             ) as res:
@@ -171,7 +167,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             async with session.post(
                 url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
                 json={
-                    "command": 7773,
+                    "command": 7774,
                     "data": [user_token, project_name, file_name]
                 }
             ) as res:
@@ -210,7 +206,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             async with session.post(
                 url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
                 json={
-                    "command": 3733,
+                    "command": 3734,
                     "data": [user_token, project_name]
                 }
             ) as res:
@@ -250,7 +246,7 @@ class SIAgentRepositoryImpl(SIAgentRepository):
             async with session.post(
                 url=f"http://{os.getenv('HOST')}:{os.getenv('FASTAPI_PORT')}/request-ai-command",
                 json={
-                    "command": 7377,
+                    "command": 7378,
                     "data": [user_token, project_name]
                 }
             ) as res:
